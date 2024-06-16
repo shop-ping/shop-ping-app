@@ -31,6 +31,15 @@
     ],
     "experiments": {
       "typedRoutes": true
-    }
+    },
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "eas": {
+        "projectId": "5d8e85e1-17f4-4f69-b150-0e4af7837051"
+      }
+    },
+    "owner": "shop-ping"
   }
 }
