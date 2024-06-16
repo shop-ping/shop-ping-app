@@ -1,21 +1,21 @@
 // WEB SUPPORT: Do this https://tamagui.dev/docs/guides/metro#web-support
 // import '../tamagui-web.css'
+import { useEffect } from "react";
+import { useColorScheme } from "react-native";
 
 import {
   // DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
-import { SplashScreen, Stack } from "expo-router";
-import { useColorScheme } from "react-native";
-import { TamaguiProvider } from "tamagui";
 
-import InterMedium from "@tamagui/font-inter/otf/Inter-Medium.otf";
-import InterBold from "@tamagui/font-inter/otf/Inter-Bold.otf";
+import { useFonts } from "expo-font";
+import { SplashScreen, Stack } from "expo-router";
 
 import { tamaguiConfig } from "@/tamagui.config";
-import { useFonts } from "expo-font";
-import { useEffect } from "react";
+import InterBold from "@tamagui/font-inter/otf/Inter-Bold.otf";
+import InterMedium from "@tamagui/font-inter/otf/Inter-Medium.otf";
+import { TamaguiProvider } from "tamagui";
 
 export default function RootLayout() {
   const colorScheme = useColorScheme();

@@ -1,5 +1,6 @@
-import { Tabs } from "expo-router";
 import React from "react";
+
+import { Tabs } from "expo-router";
 
 import { TabBarIcon } from "@/components-example/navigation/TabBarIcon";
 import { Colors } from "@/constants/Colors";
