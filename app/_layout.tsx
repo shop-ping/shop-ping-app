@@ -10,6 +10,9 @@ import { SplashScreen, Stack } from "expo-router";
 import { useColorScheme } from "react-native";
 import { TamaguiProvider } from "tamagui";
 
+import InterMedium from "@tamagui/font-inter/otf/Inter-Medium.otf";
+import InterBold from "@tamagui/font-inter/otf/Inter-Bold.otf";
+
 import { tamaguiConfig } from "@/tamagui.config";
 import { useFonts } from "expo-font";
 import { useEffect } from "react";
@@ -18,17 +21,17 @@ export default function RootLayout() {
   const colorScheme = useColorScheme();
 
   // Prevent the splash screen from auto-hiding before asset loading is complete.
-  SplashScreen.preventAutoHideAsync();
+  void SplashScreen.preventAutoHideAsync();
 
   const [interLoaded, interError] = useFonts({
-    Inter: require("@tamagui/font-inter/otf/Inter-Medium.otf"),
-    InterBold: require("@tamagui/font-inter/otf/Inter-Bold.otf"),
+    Inter: InterMedium,
+    InterBold: InterBold,
   });
 
   useEffect(() => {
     if (interLoaded || interError) {
       // Hide the splash screen after the fonts have loaded (or an error was returned) and the UI is ready.
-      SplashScreen.hideAsync();
+      void SplashScreen.hideAsync();
     }
   }, [interLoaded, interError]);
 
@@ -38,7 +41,10 @@ export default function RootLayout() {
 
   return (
     // add this
-    <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
+    <TamaguiProvider
+      config={tamaguiConfig}
+      defaultTheme={colorScheme ?? "light"}
+    >
       {/*<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>*/}
       <ThemeProvider value={DefaultTheme}>
         <Stack>
