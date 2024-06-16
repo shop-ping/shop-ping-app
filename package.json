@@ -3,10 +3,10 @@
   "main": "expo-router/entry",
   "version": "1.0.0",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
+    "start": "expo start -c",
+    "android": "expo start --android -c",
+    "ios": "expo start --ios -c",
+    "web": "echo \"ERROR: Fix comment in _layout.tsx before using web! \" expo start --web",
     "test": "jest --watchAll",
     "lint": "expo lint"
   },
@@ -16,6 +16,9 @@
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
     "@react-navigation/native": "^6.0.2",
+    "@tamagui/babel-plugin": "^1.100.5",
+    "@tamagui/config": "^1.100.5",
+    "@tamagui/font-inter": "^1.100.5",
     "expo": "~51.0.14",
     "expo-constants": "~16.0.2",
     "expo-font": "~12.0.7",
