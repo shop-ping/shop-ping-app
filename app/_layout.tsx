@@ -2,7 +2,7 @@
 // import '../tamagui-web.css'
 
 import {
-  DarkTheme,
+  // DarkTheme,
   DefaultTheme,
   ThemeProvider,
 } from "@react-navigation/native";
@@ -39,7 +39,8 @@ export default function RootLayout() {
   return (
     // add this
     <TamaguiProvider config={tamaguiConfig} defaultTheme={colorScheme!}>
-      <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+      {/*<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>*/}
+      <ThemeProvider value={DefaultTheme}>
         <Stack>
           <Stack.Screen name="index" />
         </Stack>
