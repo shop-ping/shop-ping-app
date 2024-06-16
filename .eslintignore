@@ -1,4 +1,3 @@
-app-example/**
-components-example/**
+example/**
 .eslintrc.js
 babel.config.js
