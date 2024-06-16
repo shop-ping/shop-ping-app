@@ -1,0 +1,30 @@
+name: Check code with ESLint
+
+on:
+  push:
+    branches:
+      - main
+      - prod
+  pull_request:
+    branches:
+      - main
+      - prod
+
+jobs:
+  eslint:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Run ESLint
+        run: npm run lint
