@@ -2,6 +2,6 @@
 module.exports = {
   extends: ["expo", "eslint:recommended"],
   env: {
-    jest: true
-  }
+    jest: true,
+  },
 };

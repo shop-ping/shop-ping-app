@@ -8,7 +8,9 @@
     "ios": "expo start --ios -c",
     "web": "echo \"ERROR: Fix comment in _layout.tsx before using web! \" expo start --web",
     "test": "jest --watchAll",
-    "lint": "expo lint"
+    "lint": "expo lint",
+    "checkstyle": "npx prettier --check .",
+    "style": "npx prettier --write ."
   },
   "jest": {
     "preset": "jest-expo"
