@@ -61,19 +61,19 @@ export default function AccountScreen() {
 
     let emptyFlag = false;
 
-    if (usernameC === "") {
+    if (usernameC.trim() === "") {
       errors.usernameC = true;
       emptyFlag = true;
     }
-    if (email === "") {
+    if (email.trim() === "") {
       errors.email = true;
       emptyFlag = true;
     }
-    if (passwordV1 === "") {
+    if (passwordV1.trim() === "") {
       errors.passwordV1 = true;
       emptyFlag = true;
     }
-    if (passwordV2 === "") {
+    if (passwordV2.trim() === "") {
       errors.passwordV2 = true;
       emptyFlag = true;
     }
