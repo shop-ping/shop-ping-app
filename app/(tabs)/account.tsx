@@ -6,27 +6,42 @@ import { Button, Section } from "tamagui";
 import IconTemp from "../../assets/images/icon.png";
 import LogoImg from "../../assets/images/logo.png";
 
+interface AccountErrors {
+  usernameC: boolean;
+  email: boolean;
+  passwordV1: boolean;
+  passwordV2: boolean;
+}
+const DEFAULT_ACCOUNT_ERRORS: AccountErrors = {
+  usernameC: false,
+  email: false,
+  passwordV1: false,
+  passwordV2: false,
+};
+
 export default function AccountScreen() {
   // Login inputs
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState<string>("");
+  const [password, setPassword] = useState<string>("");
 
   // Create account inputs
-  const [usernameC, setUsernameC] = useState("");
-  const [email, setEmail] = useState("");
-  const [passwordV1, setPasswordV1] = useState("");
-  const [passwordV2, setPasswordV2] = useState("");
-  const [inputErrors, setInputErrors] = useState({});
+  const [usernameC, setUsernameC] = useState<string>("");
+  const [email, setEmail] = useState<string>("");
+  const [passwordV1, setPasswordV1] = useState<string>("");
+  const [passwordV2, setPasswordV2] = useState<string>("");
+  const [inputErrors, setInputErrors] = useState<AccountErrors>(
+    DEFAULT_ACCOUNT_ERRORS,
+  );
 
   // Account information (retrieve from backend)
-  const [usernameA, setUsernameA] = useState("user123");
-  const [emailA, setEmailA] = useState("user123@gmail.com");
-  const [passwordA1, setPasswordA1] = useState("123");
-  const [passwordA2, setPasswordA2] = useState("");
+  const [usernameA, setUsernameA] = useState<string>("user123");
+  const [emailA, setEmailA] = useState<string>("user123@gmail.com");
+  const [passwordA1, setPasswordA1] = useState<string>("123");
+  const [passwordA2, setPasswordA2] = useState<string>("");
 
   // View options to set login/ create/ account view
-  const [isCreatingAccount, setIsCreatingAccount] = useState(false);
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isCreatingAccount, setIsCreatingAccount] = useState<boolean>(false);
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean>(false);
 
   // const navigation = useNavigation();
 
@@ -42,7 +57,8 @@ export default function AccountScreen() {
   };
 
   const handleCreate = () => {
-    const errors = {};
+    const errors: AccountErrors = { ...DEFAULT_ACCOUNT_ERRORS };
+
     let emptyFlag = false;
 
     if (usernameC === "") {
@@ -92,7 +108,7 @@ export default function AccountScreen() {
     setEmail("");
     setPasswordV1("");
     setPasswordV2("");
-    setInputErrors({});
+    setInputErrors({ ...DEFAULT_ACCOUNT_ERRORS });
     setIsCreatingAccount(false);
   };
 
