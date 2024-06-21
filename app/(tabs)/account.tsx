@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Alert, Image, StyleSheet, Text, TextInput, View } from "react-native";
 
+import { Ionicons } from "@expo/vector-icons";
+
 import { Button, Section } from "tamagui";
 
-import IconTemp from "../../assets/images/icon.png";
 import LogoImg from "../../assets/images/logo.png";
 
 interface AccountErrors {
@@ -117,7 +118,12 @@ export default function AccountScreen() {
       {isLoggedIn ? (
         <>
           <Section style={styles.sectionA}></Section>
-          <Image source={IconTemp} alt="logo" style={styles.profileImg} />
+          <Ionicons
+            style={styles.profileImg}
+            name="person-circle-outline"
+            size={100}
+            color="black"
+          />
           <Text style={styles.titleL}>{username}</Text>
           <Text style={styles.headerA}>Update Profile Info</Text>
           <Text style={styles.inputTitleL}>Username</Text>
@@ -176,6 +182,7 @@ export default function AccountScreen() {
 
           {isCreatingAccount ? (
             <>
+              <Text style={styles.inputTitleL}>Username</Text>
               <TextInput
                 placeholder="username"
                 style={[
@@ -185,6 +192,7 @@ export default function AccountScreen() {
                 value={usernameC}
                 onChangeText={setUsernameC}
               />
+              <Text style={styles.inputTitleL}>Email</Text>
               <TextInput
                 placeholder="email"
                 style={[
@@ -194,6 +202,7 @@ export default function AccountScreen() {
                 value={email}
                 onChangeText={setEmail}
               />
+              <Text style={styles.inputTitleL}>Password</Text>
               <TextInput
                 placeholder="enter password"
                 style={[
@@ -204,6 +213,7 @@ export default function AccountScreen() {
                 onChangeText={setPasswordV1}
                 secureTextEntry={true}
               />
+              <Text style={styles.inputTitleL}>Confirm Password</Text>
               <TextInput
                 placeholder="re-enter password"
                 style={[
@@ -290,7 +300,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#fff",
-    paddingBottom: "5%",
+    paddingBottom: "8%",
   },
   sectionL: {
     flex: 1,
@@ -326,7 +336,7 @@ const styles = StyleSheet.create({
   inputTitleL: {
     margin: 3,
     width: "80%",
-    color: "#969696",
+    color: "#606060",
     fontSize: 15,
   },
   buttonL: {
@@ -356,13 +366,7 @@ const styles = StyleSheet.create({
     paddingTop: 20,
   },
   profileImg: {
-    width: 100,
-    height: 100,
-    resizeMode: "cover",
-    borderRadius: 50,
     marginTop: -50,
-    borderColor: "black",
-    borderWidth: 2,
   },
   headerA: {
     fontSize: 16,
