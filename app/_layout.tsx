@@ -1,8 +1,8 @@
 // WEB SUPPORT: Do this https://tamagui.dev/docs/guides/metro#web-support
 // import '../tamagui-web.css'
 import { useEffect } from "react";
-import { useColorScheme } from "react-native";
 
+// import { useColorScheme } from "react-native";
 import {
   // DarkTheme,
   DefaultTheme,
@@ -18,7 +18,7 @@ import InterMedium from "@tamagui/font-inter/otf/Inter-Medium.otf";
 import { TamaguiProvider } from "tamagui";
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
+  // const colorScheme = useColorScheme();
 
   // Prevent the splash screen from auto-hiding before asset loading is complete.
   void SplashScreen.preventAutoHideAsync();
@@ -41,10 +41,7 @@ export default function RootLayout() {
 
   return (
     // add this
-    <TamaguiProvider
-      config={tamaguiConfig}
-      defaultTheme={colorScheme ?? "light"}
-    >
+    <TamaguiProvider config={tamaguiConfig} defaultTheme={"light"}>
       {/*<ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>*/}
       <ThemeProvider value={DefaultTheme}>
         <Stack>
