@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView from "react-native-maps";
 
@@ -5,26 +6,35 @@ import { Button, Input, XStack, YStack } from "tamagui";
 
 interface InputRowProps {
   text: string;
+  value: string;
+  onChange: (next: string) => void;
 }
 
-function InputRow({ text }: InputRowProps) {
+function InputRow({ text, value, onChange }: InputRowProps) {
   return (
     <XStack gap={"$2"} style={styles.inputRow}>
       <Text style={styles.inputRowText}>{text}</Text>
-      <Input style={styles.input} />
+      <Input style={styles.input} value={value} onChangeText={onChange} />
     </XStack>
   );
 }
 
 export default function MapScreen() {
+  const [from, setFrom] = useState<string>("");
+  const [to, setTo] = useState<string>("");
+
+  const handleSearch = () => {
+    console.log(`${from} ${to}`);
+  };
+
   return (
     <>
       <View style={styles.default}>
         <View style={styles.directionBox}>
           <YStack gap={"$2"}>
-            <InputRow text="From" />
-            <InputRow text="To" />
-            <Button>Search</Button>
+            <InputRow text="From" value={from} onChange={setFrom} />
+            <InputRow text="To" value={to} onChange={setTo} />
+            <Button onPress={handleSearch}>Search</Button>
           </YStack>
         </View>
         <MapView style={styles.map} />
