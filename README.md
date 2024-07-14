@@ -11,7 +11,15 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm run prepare
    ```
 
-2. Start the app
+2. Add API key
+
+   A Mapbox API key is required to build this app. Once you have one, make a copy of `.env.example` named `.env`,
+   and add your API key in the file.
+
+   **NOTE:** `.env` API key storage is not secure and is only being used as a temporary solution for prototyping.
+   You should deactivate your key when not in use.
+
+3. Start the app
 
    ```bash
     npx expo start
