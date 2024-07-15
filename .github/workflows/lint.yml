@@ -23,6 +23,10 @@ jobs:
         with:
           node-version: 20
 
+      - name: Create dummy env file
+        run: |
+          cp project.env.ts.example project.env.ts
+
       - name: Install Dependencies
         run: npm ci
 
