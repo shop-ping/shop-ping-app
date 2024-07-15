@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { Geojson, LatLng, Polyline } from "react-native-maps";
 
@@ -32,6 +32,7 @@ export default function MapScreen() {
   const [to, setTo] = useState<string>("");
   const [directions, setDirections] = useState<LatLng[]>([]);
   const [places, setPlaces] = useState<FeatureCollection | null>(null);
+  const mapRef = useRef<MapView | null>(null);
   const sessionId = useContext<string>(SessionIdContext);
 
   const handleSearch = async () => {
@@ -57,6 +58,10 @@ export default function MapScreen() {
     ];
     const { polyline, coords } = await mapboxDirections(fromLongLat, toLongLat);
     setDirections(coords);
+    mapRef.current?.fitToCoordinates(coords, {
+      animated: true,
+      edgePadding: { top: 70, right: 10, bottom: 10, left: 10 },
+    });
     const storesGeoJson = await mapboxCategorySearch(polyline);
     setPlaces(storesGeoJson as FeatureCollection);
   };
@@ -71,7 +76,7 @@ export default function MapScreen() {
             <Button onPress={handleSearch}>Search</Button>
           </YStack>
         </View>
-        <MapView style={styles.map}>
+        <MapView style={styles.map} ref={mapRef}>
           {directions.length > 0 ? <Polyline coordinates={directions} /> : null}
           {places && <Geojson geojson={places} />}
         </MapView>
