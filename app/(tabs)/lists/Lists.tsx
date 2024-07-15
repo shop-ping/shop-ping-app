@@ -7,8 +7,10 @@ import {
   View,
 } from "react-native";
 
+import Ionicons from "@expo/vector-icons/Ionicons";
+
 import { Check } from "@tamagui/lucide-icons";
-import { Checkbox } from "tamagui";
+import { Button, Checkbox } from "tamagui";
 
 import itemList from "../../../data/list-data";
 import ItemModal from "./ItemModal";
@@ -55,7 +57,13 @@ export default function Lists() {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>ShopPing List</Text>
+      <View style={styles.header}>
+        <Ionicons name="list" size={40} color="black" style={styles.icon} />
+        <Text style={styles.title}>Shopping List</Text>
+      </View>
+      <Button width="25%" color={"#fff"} backgroundColor={"#A3CD3A"}>
+        Share
+      </Button>
       <ScrollView>
         {items.map((item, index) => (
           <View key={index} style={styles.itemContainer}>
@@ -66,20 +74,7 @@ export default function Lists() {
             </Checkbox>
             <Text style={styles.itemName}>{item.name}</Text>
             <Text style={styles.itemQuantity}>{item.quantity}</Text>
-            {/*<Picker
-              selectedValue={item.quantity}
-              style={styles.picker}
-              onValueChange={(itemValue) => {
-                const newItems = [...items];
-                newItems[index].quantity = itemValue as number;
-                setItems(newItems);
-              }}
-            >
-              {[...Array(10).keys()].map((num) => (
-                <Picker.Item key={num} label={`${num + 1}`} value={num + 1} />
-              ))}
-            </Picker>*/}
-            {/*<CheckBox />*/}
+
             <ItemModal
               visible={modalVisible}
               onClose={closeModal}
@@ -102,7 +97,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   title: {
-    fontSize: 30,
+    fontSize: 35,
     fontWeight: "bold",
     marginBottom: 30,
     marginTop: 50,
@@ -121,11 +116,12 @@ const styles = StyleSheet.create({
   },
   itemName: {
     flex: 1,
-    fontSize: 18,
+    fontSize: 20,
+    paddingLeft: 10,
   },
   itemQuantity: {
     alignSelf: "flex-end",
-    fontSize: 18,
+    fontSize: 20,
     paddingRight: 20,
   },
   picker: {
@@ -147,5 +143,14 @@ const styles = StyleSheet.create({
     fontSize: 50,
     color: "#fff",
     lineHeight: 55,
+  },
+  header: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
+  icon: {
+    paddingTop: 20,
+    marginRight: 10,
   },
 });
