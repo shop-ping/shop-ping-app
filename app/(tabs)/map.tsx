@@ -46,6 +46,7 @@ export default function MapScreen() {
   const handleSearch = async () => {
     Keyboard.dismiss();
     setDirections([]);
+    setPlaces(null);
     const { fromFeatures, toFeatures } = await mapboxSearch(
       from,
       to,
