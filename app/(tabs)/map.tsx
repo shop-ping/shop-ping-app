@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import MapView, { Geojson, LatLng, Polyline } from "react-native-maps";
+import MapView, { LatLng, Polyline } from "react-native-maps";
 
 import { Button, Input, XStack, YStack } from "tamagui";
 
@@ -11,7 +11,7 @@ import {
   mapboxDirections,
   mapboxSearch,
 } from "@/shared/mapbox.service";
-import { FeatureCollection } from "geojson";
+import { SearchBoxCategoryResponse } from "@mapbox/search-js-core";
 
 interface InputRowProps {
   text: string;
@@ -32,7 +32,7 @@ export default function MapScreen() {
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
   const [directions, setDirections] = useState<LatLng[]>([]);
-  const [places, setPlaces] = useState<FeatureCollection | null>(null);
+  const [places, setPlaces] = useState<SearchBoxCategoryResponse | null>(null);
   const mapRef = useRef<MapView | null>(null);
   const sessionId = useContext<string>(SessionIdContext);
 
@@ -62,7 +62,8 @@ export default function MapScreen() {
       edgePadding: { top: 70, right: 10, bottom: 10, left: 10 },
     });
     const storesGeoJson = await mapboxCategorySearch(polyline);
-    setPlaces(storesGeoJson as FeatureCollection);
+    setPlaces(storesGeoJson);
+    console.log(JSON.stringify(storesGeoJson));
   };
 
   return (
@@ -77,9 +78,13 @@ export default function MapScreen() {
         </View>
         <MapView style={styles.map} ref={mapRef}>
           {directions.length > 0 ? <Polyline coordinates={directions} /> : null}
-          {places && (
-            <Geojson geojson={places} markerComponent={<StoreMarker />} />
-          )}
+          {places &&
+            places.features.map((feature) => (
+              <StoreMarker
+                feature={feature}
+                key={feature.properties.mapbox_id}
+              />
+            ))}
         </MapView>
       </View>
     </>

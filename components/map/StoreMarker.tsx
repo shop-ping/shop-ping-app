@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { View } from "react-native";
+import { LatLng, Marker } from "react-native-maps";
 import Svg, { Circle, Path, Text } from "react-native-svg";
 
-export default function StoreMarker() {
+import { SearchBoxCategorySuggestion } from "@mapbox/search-js-core";
+
+export function StoreMarkerIcon() {
   const [number, setNumber] = useState(0);
 
   useEffect(() => {
@@ -31,5 +34,23 @@ export default function StoreMarker() {
         </Text>
       </Svg>
     </View>
+  );
+}
+
+export interface StoreMarkerProps {
+  feature: SearchBoxCategorySuggestion;
+}
+
+export default function StoreMarker({ feature }: StoreMarkerProps) {
+  const coordinates: LatLng = {
+    latitude: feature.properties.coordinates.latitude,
+    longitude: feature.properties.coordinates.longitude,
+  };
+  const title = feature.properties.name;
+  const description = feature.properties.full_address;
+  return (
+    <Marker coordinate={coordinates} title={title} description={description}>
+      <StoreMarkerIcon />
+    </Marker>
   );
 }
