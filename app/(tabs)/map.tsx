@@ -2,6 +2,8 @@ import { useContext, useRef, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView, { LatLng, Polyline } from "react-native-maps";
 
+import Constants from "expo-constants";
+
 import { Button, Input, XStack, YStack } from "tamagui";
 
 import { SessionIdContext } from "@/app/_layout";
@@ -105,7 +107,7 @@ const styles = StyleSheet.create({
     flex: 1,
     position: "absolute",
     left: 0,
-    top: 49,
+    top: Constants.statusBarHeight,
     zIndex: 10,
     backgroundColor: "white",
     width: "100%",
