@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Keyboard, StyleSheet, Text, View } from "react-native";
 import MapView, { LatLng, Polyline } from "react-native-maps";
 
 import Constants from "expo-constants";
@@ -39,6 +39,7 @@ export default function MapScreen() {
   const sessionId = useContext<string>(SessionIdContext);
 
   const handleSearch = async () => {
+    Keyboard.dismiss();
     setDirections([]);
     const { fromFeatures, toFeatures } = await mapboxSearch(
       from,
