@@ -100,7 +100,16 @@ export default function MapScreen() {
             <Button onPress={handleSearch}>Search</Button>
           </YStack>
         </View>
-        <MapView style={styles.map} ref={mapRef}>
+        <MapView
+          style={styles.map}
+          ref={mapRef}
+          initialRegion={{
+            latitude: 43.65107,
+            longitude: -79.347015,
+            latitudeDelta: 1.5,
+            longitudeDelta: 1.5,
+          }}
+        >
           {directions.length > 0 ? <Polyline coordinates={directions} /> : null}
           {places &&
             places.features.map((feature) => (
