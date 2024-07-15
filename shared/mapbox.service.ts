@@ -63,6 +63,7 @@ export const mapboxDirections = async (
       .getDirections({
         profile: "driving",
         geometries: "geojson",
+        overview: "full",
         waypoints: [{ coordinates: fromLongLat }, { coordinates: toLongLat }],
       })
       .send()
@@ -92,6 +93,6 @@ export const mapboxCategorySearch = async (polyline6: string) => {
     route: polyline6,
     route_geometry: "polyline6",
     sar_type: "isochrone",
-    time_deviation: 5,
+    time_deviation: 3,
   });
 };
