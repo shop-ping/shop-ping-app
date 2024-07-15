@@ -3,6 +3,7 @@ interface Item {
   quantity: number;
   checked: boolean;
 }
+
 const items: Item[] = [
   { name: "Marinara Sauce", quantity: 1, checked: false },
   { name: "Spaghetti Pasta", quantity: 2, checked: false },

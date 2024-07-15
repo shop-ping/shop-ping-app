@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
   ScrollView,
   StyleSheet,
@@ -9,10 +9,11 @@ import {
 
 import Ionicons from "@expo/vector-icons/Ionicons";
 
-import { Check } from "@tamagui/lucide-icons";
-import { Button, Checkbox } from "tamagui";
+import type { SelectProps } from "tamagui";
+import { Adapt, Button, Checkbox, Input, Select, Sheet, YStack } from "tamagui";
 
 import itemList from "../../../data/list-data";
+import listList from "../../../data/lists-data";
 import ItemModal from "./ItemModal";
 
 interface Item {
@@ -20,7 +21,6 @@ interface Item {
   quantity: number;
   checked: boolean;
 }
-
 export default function Lists() {
   const [items, setItems] = useState<Item[]>(itemList);
   const [modalVisible, setModalVisible] = useState<boolean>(false); // Define type for modalVisible
@@ -61,19 +61,32 @@ export default function Lists() {
         <Ionicons name="list" size={40} color="black" style={styles.icon} />
         <Text style={styles.title}>Shopping List</Text>
       </View>
-      <Button width="25%" color={"#fff"} backgroundColor={"#A3CD3A"}>
-        Share
-      </Button>
+      <View style={styles.header1}>
+        <ListSelector></ListSelector>
+        <Button
+          style={styles.shareButton}
+          width="25%"
+          color={"#fff"}
+          backgroundColor={"#A3CD3A"}
+        >
+          Share
+        </Button>
+      </View>
+
       <ScrollView>
         {items.map((item, index) => (
           <View key={index} style={styles.itemContainer}>
             <Checkbox size="$4">
               <Checkbox.Indicator>
-                <Check />
+                <Ionicons name="checkmark" size={18} color="black" />
               </Checkbox.Indicator>
             </Checkbox>
             <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemQuantity}>{item.quantity}</Text>
+            <Input
+              size="$4"
+              borderWidth={2}
+              defaultValue={item.quantity.toString()}
+            />
 
             <ItemModal
               visible={modalVisible}
@@ -89,6 +102,104 @@ export default function Lists() {
     </View>
   );
 }
+export function ListSelector(props: SelectProps) {
+  const [val, setVal] = useState("list");
+
+  return (
+    <Select
+      value={val}
+      onValueChange={setVal}
+      disablePreventBodyScroll
+      {...props}
+    >
+      <Select.Trigger
+        width={220}
+        iconAfter={<Ionicons name="chevron-down" size={24} color="black" />}
+      >
+        <Select.Value placeholder="Select a list" />
+      </Select.Trigger>
+
+      <Adapt when="sm" platform="touch">
+        <Sheet
+          native={!!props.native}
+          modal
+          dismissOnSnapToBottom
+          animationConfig={{
+            type: "spring",
+            damping: 20,
+            mass: 1.2,
+            stiffness: 250,
+          }}
+        >
+          <Sheet.Frame>
+            <Sheet.ScrollView>
+              <Adapt.Contents />
+            </Sheet.ScrollView>
+          </Sheet.Frame>
+          <Sheet.Overlay
+            animation="lazy"
+            enterStyle={{ opacity: 0 }}
+            exitStyle={{ opacity: 0 }}
+          />
+        </Sheet>
+      </Adapt>
+
+      <Select.Content zIndex={200000}>
+        <Select.ScrollUpButton
+          alignItems="center"
+          justifyContent="center"
+          position="relative"
+          width="100%"
+          height="$3"
+        >
+          <YStack zIndex={10}>
+            <Ionicons name="chevron-up" size={24} color="black" />
+          </YStack>
+          {/*}
+          <LinearGradient
+            start={[0, 0]}
+            end={[0, 1]}
+            fullscreen
+            colors={['$background', 'transparent']}
+            borderRadius="$4"
+          />*/}
+        </Select.ScrollUpButton>
+
+        <Select.Viewport
+          // to do animations:
+          // animation="quick"
+          // animateOnly={['transform', 'opacity']}
+          // enterStyle={{ o: 0, y: -10 }}
+          // exitStyle={{ o: 0, y: 10 }}
+          minWidth={200}
+        >
+          <Select.Group>
+            <Select.Label>Lists</Select.Label>
+            {/* for longer lists memoizing these is useful */}
+            {useMemo(
+              () =>
+                listList.map((listList, i) => {
+                  return (
+                    <Select.Item
+                      index={i}
+                      key={listList.name}
+                      value={listList.name.toLowerCase()}
+                    >
+                      <Select.ItemText>{listList.name}</Select.ItemText>
+                      <Select.ItemIndicator marginLeft="auto">
+                        <Ionicons name="checkmark" size={16} color="black" />
+                      </Select.ItemIndicator>
+                    </Select.Item>
+                  );
+                }),
+              [listList],
+            )}
+          </Select.Group>
+        </Select.Viewport>
+      </Select.Content>
+    </Select>
+  );
+}
 
 const styles = StyleSheet.create({
   container: {
@@ -99,7 +210,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 35,
     fontWeight: "bold",
-    marginBottom: 30,
+    marginBottom: 5,
     marginTop: 50,
   },
   itemContainer: {
@@ -131,7 +242,7 @@ const styles = StyleSheet.create({
   addButton: {
     position: "absolute",
     bottom: 30,
-    right: 155,
+    right: 20,
     backgroundColor: "#A3CD3A",
     width: 70,
     height: 70,
@@ -149,8 +260,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginBottom: 20,
   },
+  header1: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 20,
+  },
   icon: {
-    paddingTop: 20,
+    marginTop: 45,
     marginRight: 10,
+  },
+  shareButton: {
+    alignSelf: "flex-end",
+    marginLeft: 40,
   },
 });
