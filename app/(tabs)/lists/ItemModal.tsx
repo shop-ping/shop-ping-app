@@ -44,7 +44,13 @@ const CustomModal: React.FC<CustomModalProps> = ({
             style={styles.input}
             value={inputValue}
             onChangeText={handleInputChange}
-            placeholder="Type something..."
+            placeholder="Enter an Item"
+          />
+          <TextInput
+            style={styles.input}
+            value={inputValue}
+            onChangeText={handleInputChange}
+            placeholder="How many?"
           />
           <View style={styles.buttonContainer}>
             <TouchableOpacity

@@ -7,28 +7,29 @@ import {
   View,
 } from "react-native";
 
+import { Check } from "@tamagui/lucide-icons";
+import { Checkbox } from "tamagui";
+
 import itemList from "../../../data/list-data";
 import ItemModal from "./ItemModal";
-
-{
-  /*import { Check } from '@tamagui/lucide-icons'
-import { Checkbox } from 'tamagui'*/
-}
 
 interface Item {
   name: string;
   quantity: number;
+  checked: boolean;
 }
 
 export default function Lists() {
   const [items, setItems] = useState<Item[]>(itemList);
   const [modalVisible, setModalVisible] = useState<boolean>(false); // Define type for modalVisible
-  const [userInput, setUserInput] = useState<string>(""); // Define type for userInput
+  {
+    /*const [userInput, setUserInput] = useState<string>(""); // Define type for userInput*/
+  }
 
   useEffect(() => {
     // Temporary state update inside useEffect
     const newItems = [...items];
-    newItems.push({ name: "New Item", quantity: 1 });
+    newItems.push({ name: "New Item", quantity: 1, checked: false });
     setItems(newItems);
 
     // Cleanup function to revert state after component unmounts (optional)
@@ -45,7 +46,9 @@ export default function Lists() {
     setModalVisible(false);
   };
   const handleModalSubmit = (input: string) => {
-    setUserInput(input);
+    {
+      /*setUserInput(input);*/
+    }
     closeModal();
     // Process the user input here as needed
   };
@@ -56,9 +59,13 @@ export default function Lists() {
       <ScrollView>
         {items.map((item, index) => (
           <View key={index} style={styles.itemContainer}>
-            <View style={styles.dot} />
+            <Checkbox size="$4">
+              <Checkbox.Indicator>
+                <Check />
+              </Checkbox.Indicator>
+            </Checkbox>
             <Text style={styles.itemName}>{item.name}</Text>
-            <Text style={styles.itemName}>{userInput}</Text>
+            <Text style={styles.itemQuantity}>{item.quantity}</Text>
             {/*<Picker
               selectedValue={item.quantity}
               style={styles.picker}
@@ -95,10 +102,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
   },
   title: {
-    fontSize: 24,
+    fontSize: 30,
     fontWeight: "bold",
-    marginBottom: 20,
-    marginTop: 30,
+    marginBottom: 30,
+    marginTop: 50,
   },
   itemContainer: {
     flexDirection: "row",
@@ -116,6 +123,11 @@ const styles = StyleSheet.create({
     flex: 1,
     fontSize: 18,
   },
+  itemQuantity: {
+    alignSelf: "flex-end",
+    fontSize: 18,
+    paddingRight: 20,
+  },
   picker: {
     height: 50,
     width: 100,
@@ -123,16 +135,17 @@ const styles = StyleSheet.create({
   addButton: {
     position: "absolute",
     bottom: 30,
-    right: 30,
+    right: 155,
     backgroundColor: "#A3CD3A",
-    width: 50,
-    height: 50,
-    borderRadius: 25,
+    width: 70,
+    height: 70,
+    borderRadius: 35,
     justifyContent: "center",
     alignItems: "center",
   },
   addButtonText: {
-    fontSize: 30,
+    fontSize: 50,
     color: "#fff",
+    lineHeight: 55,
   },
 });

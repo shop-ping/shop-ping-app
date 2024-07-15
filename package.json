@@ -23,6 +23,7 @@
     "@react-native-picker/picker": "^2.7.7",
     "@react-navigation/native": "^6.0.2",
     "@tamagui/babel-plugin": "^1.100.5",
+    "@tamagui/checkbox": "^1.102.1",
     "@tamagui/config": "^1.100.5",
     "@tamagui/font-inter": "^1.100.5",
     "@tamagui/lucide-icons": "^1.102.1",
