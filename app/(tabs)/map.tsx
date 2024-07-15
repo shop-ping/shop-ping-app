@@ -5,6 +5,7 @@ import MapView, { Geojson, LatLng, Polyline } from "react-native-maps";
 import { Button, Input, XStack, YStack } from "tamagui";
 
 import { SessionIdContext } from "@/app/_layout";
+import StoreMarker from "@/components/map/StoreMarker";
 import {
   mapboxCategorySearch,
   mapboxDirections,
@@ -78,7 +79,9 @@ export default function MapScreen() {
         </View>
         <MapView style={styles.map} ref={mapRef}>
           {directions.length > 0 ? <Polyline coordinates={directions} /> : null}
-          {places && <Geojson geojson={places} />}
+          {places && (
+            <Geojson geojson={places} markerComponent={<StoreMarker />} />
+          )}
         </MapView>
       </View>
     </>
