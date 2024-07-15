@@ -86,13 +86,16 @@ export const mapboxDirections = async (
   return { polyline, coords };
 };
 
-export const mapboxCategorySearch = async (polyline6: string) => {
+export const mapboxCategorySearch = async (
+  polyline6: string,
+  timeDev: number,
+) => {
   const search = new SearchBoxCore({ accessToken: MAPBOX_API_TOKEN });
 
   return await search.category("grocery", {
     route: polyline6,
     route_geometry: "polyline6",
     sar_type: "isochrone",
-    time_deviation: 1,
+    time_deviation: timeDev,
   });
 };

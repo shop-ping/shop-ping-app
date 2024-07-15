@@ -1,5 +1,5 @@
 import { useContext, useRef, useState } from "react";
-import { Keyboard, StyleSheet, Text, View } from "react-native";
+import { Alert, Keyboard, StyleSheet, Text, View } from "react-native";
 import MapView, { LatLng, Polyline } from "react-native-maps";
 
 import Constants from "expo-constants";
@@ -74,7 +74,17 @@ export default function MapScreen() {
       animated: true,
       edgePadding: { top: 70, right: 10, bottom: 10, left: 10 },
     });
-    const storesGeoJson = await mapboxCategorySearch(polyline);
+    let storesGeoJson = await mapboxCategorySearch(polyline, 1);
+    if (storesGeoJson.features.length < 3) {
+      console.warn("No stores within 1 minute");
+      storesGeoJson = await mapboxCategorySearch(polyline, 5);
+    }
+    if (storesGeoJson.features.length < 3) {
+      Alert.alert(
+        "Error",
+        "No stores were found within a 5-minute drive of your route.",
+      );
+    }
     setPlaces(storesGeoJson);
     console.log(JSON.stringify(storesGeoJson));
   };
