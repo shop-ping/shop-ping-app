@@ -25,7 +25,12 @@ function InputRow({ text, value, onChange }: InputRowProps) {
   return (
     <XStack gap={"$2"} style={styles.inputRow}>
       <Text style={styles.inputRowText}>{text}</Text>
-      <Input style={styles.input} value={value} onChangeText={onChange} />
+      <Input
+        style={styles.input}
+        value={value}
+        onChangeText={onChange}
+        numberOfLines={1}
+      />
     </XStack>
   );
 }
@@ -105,7 +110,6 @@ const styles = StyleSheet.create({
     height: "100%",
   },
   directionBox: {
-    flex: 1,
     position: "absolute",
     left: 0,
     top: Constants.statusBarHeight,
@@ -115,12 +119,18 @@ const styles = StyleSheet.create({
     padding: 10,
   },
   inputRow: {
+    flexDirection: "row",
+    alignItems: "center",
+    justifyContent: "space-between",
+    paddingHorizontal: 8,
     marginLeft: "auto",
   },
   input: {
-    flexGrow: 1,
+    flex: 6,
+    flexGrow: 6,
+    overflow: "hidden",
   },
   inputRowText: {
-    // left: 0,
+    flex: 1,
   },
 });
