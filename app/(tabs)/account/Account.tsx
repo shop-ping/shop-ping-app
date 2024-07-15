@@ -68,8 +68,8 @@ export default function Account({
           <View style={styles.wrapSubL}>
             <Text style={styles.headerA}>Membership Section</Text>
             <Text style={styles.inputTitleL}>
-              You do not have a subscription. Register for the free trial
-              before you miss out on these hard-to-beat features!
+              You do not have a subscription. Register for the free trial before
+              you miss out on these hard-to-beat features!
             </Text>
             <ScrollView
               horizontal
