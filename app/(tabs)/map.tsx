@@ -51,8 +51,13 @@ export default function MapScreen() {
       to,
       sessionId,
     );
-    setFrom(fromFeatures[0].properties.full_address);
-    setTo(toFeatures[0].properties.full_address);
+    console.log(JSON.stringify(fromFeatures[0]));
+    setFrom(
+      `${fromFeatures[0].properties.address}, ${fromFeatures[0].properties.context.place?.name ?? ""} ${fromFeatures[0].properties.context.postcode?.name ?? ""}`,
+    );
+    setTo(
+      `${toFeatures[0].properties.address}, ${toFeatures[0].properties.context.place?.name ?? ""} ${toFeatures[0].properties.context.postcode?.name ?? ""}`,
+    );
     const fromCoordsObj = fromFeatures[0].properties.coordinates;
     const toCoordsObj = toFeatures[0].properties.coordinates;
     const fromLongLat: [number, number] = [
