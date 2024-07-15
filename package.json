@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@expo/vector-icons": "^14.0.0",
+    "@react-native-community/checkbox": "^0.5.17",
+    "@react-native-picker/picker": "^2.7.7",
     "@react-navigation/native": "^6.0.2",
     "@tamagui/babel-plugin": "^1.100.5",
     "@tamagui/config": "^1.100.5",
