@@ -1,6 +1,6 @@
 import { useContext, useRef, useState } from "react";
 import { Alert, Keyboard, StyleSheet, Text, View } from "react-native";
-import MapView, { LatLng, Polyline } from "react-native-maps";
+import MapView, { LatLng, Marker, Polyline } from "react-native-maps";
 
 import Constants from "expo-constants";
 
@@ -13,7 +13,10 @@ import {
   mapboxDirections,
   mapboxSearch,
 } from "@/shared/mapbox.service";
-import { SearchBoxCategoryResponse } from "@mapbox/search-js-core";
+import {
+  SearchBoxCategoryResponse,
+  SearchBoxFeatureSuggestion,
+} from "@mapbox/search-js-core";
 
 interface InputRowProps {
   text: string;
@@ -36,8 +39,12 @@ function InputRow({ text, value, onChange }: InputRowProps) {
 }
 
 export default function MapScreen() {
-  const [from, setFrom] = useState<string>("");
-  const [to, setTo] = useState<string>("");
+  const [fromText, setFromText] = useState<string>("");
+  const [toText, setToText] = useState<string>("");
+  const [fromMbx, setFromMbx] = useState<SearchBoxFeatureSuggestion | null>(
+    null,
+  );
+  const [toMbx, setToMbx] = useState<SearchBoxFeatureSuggestion | null>(null);
   const [directions, setDirections] = useState<LatLng[]>([]);
   const [places, setPlaces] = useState<SearchBoxCategoryResponse | null>(null);
   const mapRef = useRef<MapView | null>(null);
@@ -45,21 +52,30 @@ export default function MapScreen() {
 
   const handleSearch = async () => {
     Keyboard.dismiss();
+    setFromMbx(null);
+    setToMbx(null);
     setDirections([]);
     setPlaces(null);
     const { fromFeatures, toFeatures } = await mapboxSearch(
-      from,
-      to,
+      fromText,
+      toText,
       sessionId,
     );
-    setFrom(
-      `${fromFeatures[0].properties.address}, ${fromFeatures[0].properties.context.place?.name ?? ""} ${fromFeatures[0].properties.context.postcode?.name ?? ""}`,
+
+    const nextFromMbx = fromFeatures[0];
+    const nextToMbx = toFeatures[0];
+
+    setFromMbx(nextFromMbx);
+    setToMbx(nextToMbx);
+
+    setFromText(
+      `${nextFromMbx.properties.address}, ${nextFromMbx.properties.context.place?.name ?? ""} ${nextFromMbx.properties.context.postcode?.name ?? ""}`,
     );
-    setTo(
-      `${toFeatures[0].properties.address}, ${toFeatures[0].properties.context.place?.name ?? ""} ${toFeatures[0].properties.context.postcode?.name ?? ""}`,
+    setToText(
+      `${nextToMbx.properties.address}, ${nextToMbx.properties.context.place?.name ?? ""} ${nextToMbx.properties.context.postcode?.name ?? ""}`,
     );
-    const fromCoordsObj = fromFeatures[0].properties.coordinates;
-    const toCoordsObj = toFeatures[0].properties.coordinates;
+    const fromCoordsObj = nextFromMbx.properties.coordinates;
+    const toCoordsObj = nextToMbx.properties.coordinates;
     const fromLongLat: [number, number] = [
       fromCoordsObj.longitude,
       fromCoordsObj.latitude,
@@ -93,8 +109,8 @@ export default function MapScreen() {
       <View style={styles.default}>
         <View style={styles.directionBox}>
           <YStack gap={"$2"}>
-            <InputRow text="From" value={from} onChange={setFrom} />
-            <InputRow text="To" value={to} onChange={setTo} />
+            <InputRow text="From" value={fromText} onChange={setFromText} />
+            <InputRow text="To" value={toText} onChange={setToText} />
             <Button onPress={handleSearch}>Search</Button>
           </YStack>
         </View>
@@ -108,6 +124,26 @@ export default function MapScreen() {
             longitudeDelta: 1.5,
           }}
         >
+          {fromMbx && (
+            <Marker
+              coordinate={{
+                latitude: fromMbx.properties.coordinates.latitude,
+                longitude: fromMbx.properties.coordinates.longitude,
+              }}
+              pinColor={"green"}
+              key={fromMbx.properties.mapbox_id}
+            />
+          )}
+          {toMbx && (
+            <Marker
+              coordinate={{
+                latitude: toMbx.properties.coordinates.latitude,
+                longitude: toMbx.properties.coordinates.longitude,
+              }}
+              pinColor={"wheat"}
+              key={toMbx.properties.mapbox_id}
+            />
+          )}
           {directions.length > 0 ? (
             <Polyline
               coordinates={directions}
