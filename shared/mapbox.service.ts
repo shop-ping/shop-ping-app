@@ -97,5 +97,6 @@ export const mapboxCategorySearch = async (
     route_geometry: "polyline6",
     sar_type: "isochrone",
     time_deviation: timeDev,
+    limit: 25,
   });
 };
