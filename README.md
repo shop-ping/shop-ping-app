@@ -11,7 +11,14 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm run prepare
    ```
 
-2. Add API key
+2. Setup and sign into Expo EAS
+
+   ```bash
+   npm install -g eas-cli
+   eas login
+   ```
+
+3. Add API key
 
    A Mapbox API key is required to build this app. Once you have one, make a copy of `.env.example` named `.env`,
    and add your API key in the file.
@@ -19,7 +26,7 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    **NOTE:** `.env` API key storage is not secure and is only being used as a temporary solution for prototyping.
    You should deactivate your key when not in use.
 
-3. Start the app
+4. Start the app
 
    ```bash
     npx expo start
@@ -35,16 +42,6 @@ In the output, you'll find options to open the app in a
   if required.
 
 You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
-
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
-npm run reset-project
-```
-
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
 
 ## Learn more
 
