@@ -1,6 +1,10 @@
 import { Alert } from "react-native";
+import { LatLng } from "react-native-maps";
 
 import { MAPBOX_API_TOKEN } from "@/project.env";
+import createNodeClient from "@mapbox/mapbox-sdk";
+import { Coordinates } from "@mapbox/mapbox-sdk/lib/classes/mapi-request";
+import Directions from "@mapbox/mapbox-sdk/services/directions";
 import { SearchBoxCore, SessionToken } from "@mapbox/search-js-core";
 
 export const mapboxSearch = async (
@@ -37,4 +41,46 @@ export const mapboxSearch = async (
   });
 
   return { fromFeatures, toFeatures };
+};
+
+export const mapboxDirections = async (
+  fromLongLat: Coordinates,
+  toLongLat: Coordinates,
+) => {
+  const mbxBaseClient = createNodeClient({ accessToken: MAPBOX_API_TOKEN });
+  const mbxDirectionsService = Directions(mbxBaseClient);
+  const directionsResPolyline = (
+    await mbxDirectionsService
+      .getDirections({
+        profile: "driving",
+        geometries: "polyline6",
+        waypoints: [{ coordinates: fromLongLat }, { coordinates: toLongLat }],
+      })
+      .send()
+  ).body;
+  const directionsResGeoJSON = (
+    await mbxDirectionsService
+      .getDirections({
+        profile: "driving",
+        geometries: "geojson",
+        waypoints: [{ coordinates: fromLongLat }, { coordinates: toLongLat }],
+      })
+      .send()
+  ).body;
+  const polylineRoute = directionsResPolyline.routes[0];
+  const geoJsonRoute = directionsResGeoJSON.routes[0];
+  const polyline = polylineRoute.geometry;
+  const geoJson = geoJsonRoute.geometry;
+  // Only take the first line (route)
+  const geoJsonLine =
+    geoJson.type === "MultiLineString"
+      ? geoJson.coordinates[0]
+      : geoJson.coordinates;
+
+  const coords: LatLng[] = geoJsonLine.map((point) => ({
+    longitude: point[0],
+    latitude: point[1],
+  }));
+
+  return { polyline, coords };
 };

@@ -1,11 +1,11 @@
 import { useContext, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
-import MapView from "react-native-maps";
+import MapView, { LatLng, Polyline } from "react-native-maps";
 
 import { Button, Input, XStack, YStack } from "tamagui";
 
 import { SessionIdContext } from "@/app/_layout";
-import { mapboxSearch } from "@/shared/mapbox.service";
+import { mapboxDirections, mapboxSearch } from "@/shared/mapbox.service";
 
 interface InputRowProps {
   text: string;
@@ -25,9 +25,11 @@ function InputRow({ text, value, onChange }: InputRowProps) {
 export default function MapScreen() {
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
+  const [directions, setDirections] = useState<LatLng[]>([]);
   const sessionId = useContext<string>(SessionIdContext);
 
   const handleSearch = async () => {
+    setDirections([]);
     const { fromFeatures, toFeatures } = await mapboxSearch(
       from,
       to,
@@ -37,6 +39,18 @@ export default function MapScreen() {
     setTo(toFeatures[0].properties.address);
     console.log(`From: ${fromFeatures[0].properties.full_address}`);
     console.log(`To: ${toFeatures[0].properties.full_address}`);
+    const fromCoordsObj = fromFeatures[0].properties.coordinates;
+    const toCoordsObj = toFeatures[0].properties.coordinates;
+    const fromLongLat: [number, number] = [
+      fromCoordsObj.longitude,
+      fromCoordsObj.latitude,
+    ];
+    const toLongLat: [number, number] = [
+      toCoordsObj.longitude,
+      toCoordsObj.latitude,
+    ];
+    const { coords } = await mapboxDirections(fromLongLat, toLongLat);
+    setDirections(coords);
   };
 
   return (
@@ -49,7 +63,9 @@ export default function MapScreen() {
             <Button onPress={handleSearch}>Search</Button>
           </YStack>
         </View>
-        <MapView style={styles.map} />
+        <MapView style={styles.map}>
+          {directions.length > 0 ? <Polyline coordinates={directions} /> : null}
+        </MapView>
       </View>
     </>
   );
