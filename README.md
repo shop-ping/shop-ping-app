@@ -4,33 +4,33 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
 
 ## Get started
 
-1. Install dependencies
+1.  Install dependencies
 
-   ```bash
-   npm install
-   npm run prepare
-   ```
+    ```bash
+    npm install
+    npm run prepare
+    ```
 
-2. Setup and sign into Expo EAS
+2.  Setup and sign into Expo EAS
 
-   ```bash
-   npm install -g eas-cli
-   eas login
-   ```
+    ```bash
+    npm install -g eas-cli
+    eas login
+    ```
 
-3. Add API key
+3.  Add API key
 
-   A Mapbox API key is required to build this app. Once you have one, make a copy of `.env.example` named `.env`,
-   and add your API key in the file.
+    A Mapbox API key is required to build this app. Once you have one, make a copy of `project.env.ts.example`
+    named `project.env.ts`, and add your API key in the file.
 
-   **NOTE:** `.env` API key storage is not secure and is only being used as a temporary solution for prototyping.
-   You should deactivate your key when not in use.
+    **NOTE:** File-based API key storage is not secure and is only being used as a temporary solution for prototyping.
+    You should deactivate your key when not in use.
 
-4. Start the app
+4.  Start the app
 
-   ```bash
-    npx expo start
-   ```
+    ```bash
+     npx expo start
+    ```
 
 In the output, you'll find options to open the app in a
 
