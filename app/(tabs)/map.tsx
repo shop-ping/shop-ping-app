@@ -52,7 +52,6 @@ export default function MapScreen() {
       to,
       sessionId,
     );
-    console.log(JSON.stringify(fromFeatures[0]));
     setFrom(
       `${fromFeatures[0].properties.address}, ${fromFeatures[0].properties.context.place?.name ?? ""} ${fromFeatures[0].properties.context.postcode?.name ?? ""}`,
     );
@@ -87,7 +86,6 @@ export default function MapScreen() {
       );
     }
     setPlaces(storesGeoJson);
-    console.log(JSON.stringify(storesGeoJson));
   };
 
   return (
