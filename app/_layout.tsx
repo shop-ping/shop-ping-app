@@ -20,7 +20,7 @@ import { TamaguiProvider } from "tamagui";
 
 import { v4 as uuidv4 } from "uuid";
 
-const SessionIdContext = createContext<string>("none");
+export const SessionIdContext = createContext<string>("none");
 
 export default function RootLayout() {
   const [sessionId, setSessionId] = useState<string>("none");
