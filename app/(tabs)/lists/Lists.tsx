@@ -7,23 +7,21 @@ import {
   View,
 } from "react-native";
 
+import itemList from "../../../data/list-data";
 import ItemModal from "./ItemModal";
+
+{
+  /*import { Check } from '@tamagui/lucide-icons'
+import { Checkbox } from 'tamagui'*/
+}
 
 interface Item {
   name: string;
   quantity: number;
 }
-const initialItems: Item[] = [
-  { name: "Marinara Sauce", quantity: 1 },
-  { name: "Spaghetti Pasta", quantity: 2 },
-  { name: "Cucumbers", quantity: 3 },
-  { name: "Peppers", quantity: 5 },
-  { name: "Paper Towel", quantity: 1 },
-  { name: "Toothpaste", quantity: 1 },
-];
 
 export default function Lists() {
-  const [items, setItems] = useState<Item[]>(initialItems);
+  const [items, setItems] = useState<Item[]>(itemList);
   const [modalVisible, setModalVisible] = useState<boolean>(false); // Define type for modalVisible
   const [userInput, setUserInput] = useState<string>(""); // Define type for userInput
 
@@ -35,7 +33,7 @@ export default function Lists() {
 
     // Cleanup function to revert state after component unmounts (optional)
     return () => {
-      setItems(initialItems);
+      setItems(itemList);
     };
   }, []);
 
