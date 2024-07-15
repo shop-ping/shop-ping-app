@@ -24,9 +24,6 @@ interface Item {
 export default function Lists() {
   const [items, setItems] = useState<Item[]>(itemList);
   const [modalVisible, setModalVisible] = useState<boolean>(false); // Define type for modalVisible
-  {
-    /*const [userInput, setUserInput] = useState<string>(""); // Define type for userInput*/
-  }
 
   useEffect(() => {
     // Temporary state update inside useEffect
@@ -48,9 +45,6 @@ export default function Lists() {
     setModalVisible(false);
   };
   const handleModalSubmit = (input: string) => {
-    {
-      /*setUserInput(input);*/
-    }
     closeModal();
     // Process the user input here as needed
   };
@@ -175,7 +169,6 @@ export function ListSelector(props: SelectProps) {
         >
           <Select.Group>
             <Select.Label>Lists</Select.Label>
-            {/* for longer lists memoizing these is useful */}
             {useMemo(
               () =>
                 listList.map((listList, i) => {
