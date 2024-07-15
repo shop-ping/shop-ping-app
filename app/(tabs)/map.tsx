@@ -1,8 +1,11 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import MapView from "react-native-maps";
 
 import { Button, Input, XStack, YStack } from "tamagui";
+
+import { SessionIdContext } from "@/app/_layout";
+import { mapboxSearch } from "@/shared/mapbox.service";
 
 interface InputRowProps {
   text: string;
@@ -22,9 +25,18 @@ function InputRow({ text, value, onChange }: InputRowProps) {
 export default function MapScreen() {
   const [from, setFrom] = useState<string>("");
   const [to, setTo] = useState<string>("");
+  const sessionId = useContext<string>(SessionIdContext);
 
-  const handleSearch = () => {
-    console.log(`${from} ${to}`);
+  const handleSearch = async () => {
+    const { fromFeatures, toFeatures } = await mapboxSearch(
+      from,
+      to,
+      sessionId,
+    );
+    setFrom(fromFeatures[0].properties.address);
+    setTo(toFeatures[0].properties.address);
+    console.log(`From: ${fromFeatures[0].properties.full_address}`);
+    console.log(`To: ${toFeatures[0].properties.full_address}`);
   };
 
   return (
