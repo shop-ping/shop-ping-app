@@ -108,7 +108,13 @@ export default function MapScreen() {
             longitudeDelta: 1.5,
           }}
         >
-          {directions.length > 0 ? <Polyline coordinates={directions} /> : null}
+          {directions.length > 0 ? (
+            <Polyline
+              coordinates={directions}
+              strokeWidth={5}
+              strokeColor={"rgba(0,102,255,0.75)"}
+            />
+          ) : null}
           {places &&
             places.features.map((feature) => (
               <StoreMarker
