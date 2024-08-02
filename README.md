@@ -48,10 +48,10 @@ ShopPing was created by:
 
 - [Eric](https://github.com/ricetech), 5th year Software Engineering student.
   Responsible for the map page, app architecture, prototyping and legal work.
-- [Filip], 3rd year Chemical Engineering student. Responsible for marketing and finances.
-- [Jack], 3rd year Computer Science student. Responsible for the List page, design, ads and prototyping.
-- [Nat], 4th year Computer Engineering student. Responsible for the Account page, marketing and ads.
-- [Tomer], 3rd year Computer Science student. Responsible for operations, marketing, design and branding.
+- [Filip](https://github.com/filvr), 3rd year Chemical Engineering student. Responsible for marketing and finances.
+- [Jack](https://github.com/JSnelgrove), 3rd year Computer Science student. Responsible for the List page, design, ads and prototyping.
+- [Nat](https://github.com/ntrem071), 4th year Computer Engineering student. Responsible for the Account page, marketing and ads.
+- [Tomer](https://github.com/tomersz12), 3rd year Computer Science student. Responsible for operations, marketing, design and branding.
 
 ## Developer Setup
 
