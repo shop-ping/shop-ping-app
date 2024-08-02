@@ -47,13 +47,16 @@ ShopPing was developed as a project for the GNG 4120/GNG 5120/EED 5120 class at 
 ShopPing was created by:
 
 - [Eric](https://github.com/ricetech), 5th year Software Engineering student.
-  Responsible for the map page, app architecture, prototyping and legal work.
+  Responsible for the map page, app architecture, documentation, prototyping and legal work.
 - [Filip](https://github.com/filvr), 3rd year Chemical Engineering student. Responsible for marketing and finances.
 - [Jack](https://github.com/JSnelgrove), 3rd year Computer Science student. Responsible for the List page, design, ads and prototyping.
 - [Nat](https://github.com/ntrem071), 4th year Computer Engineering student. Responsible for the Account page, marketing and ads.
 - [Tomer](https://github.com/tomersz12), 3rd year Computer Science student. Responsible for operations, marketing, design and branding.
 
 ## Developer Setup
+
+**WARNING:** Do NOT run this app in a Windows Subsystem for Linux (WSL) environment. You will run into issues with
+IP addresses, port forwarding and poor performance.
 
 1.  Install dependencies
 
@@ -62,7 +65,7 @@ ShopPing was created by:
     npm run prepare
     ```
 
-2.  Setup and sign into Expo EAS
+2.  Setup and sign in to Expo EAS
 
     ```bash
     npm install -g eas-cli
@@ -71,11 +74,31 @@ ShopPing was created by:
 
 3.  Add API key
 
-    A Mapbox API key is required to build this app. Once you have one, make a copy of `project.env.ts.example`
-    named `project.env.ts`, and add your API key in the file.
+    A Mapbox Access Token (API Key) is required to build this app. Once you have one,
+    make a copy of `project.env.ts.example` named `project.env.ts`, and add your access token in the file.
+
+    Follow the instructions in [this Mapbox help article](https://docs.mapbox.com/help/getting-started/access-tokens/)
+    to create an access token. If you do not have a Mapbox account, you will need to make one.
+
+    Make sure that the access token that you create has access to the following Mapbox API endpoints:
+
+    - NAVIGATION:
+      - Directions API
+      - Isochrone API
+    - SEARCH:
+      - Search Box API Sessions
+      - Search Box API Requests
+
+    As a reminder, as you are the owner of the token, you are responsible for all charges associated with usage
+    of the Mapbox APIs through your key. Please review the [Mapbox Pricing Structure](https://www.mapbox.com/pricing)
+    for each of the 4 endpoints listed above to make yourself aware of the free usage limits.
+
+    **SHOPPING TAKES NO RESPONSIBILITY FOR ANY MAPBOX API FEES THAT YOU INCUR AS A RESULT OF USING OUR APP.**
 
     **NOTE:** File-based API key storage is not secure and is only being used as a temporary solution for prototyping.
     You should deactivate your key when not in use.
+
+    **WARNING:** If you try to launch the app without a Mapbox Access Token, it will crash.
 
 4.  Start the app
 
@@ -83,11 +106,31 @@ ShopPing was created by:
      npx expo start
     ```
 
-In the output, you'll find options to open the app in a
+### Accessing the app using Expo Go
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
+Once Expo is ready, the recommended usage method is to download the Expo Go app on an Android or iOS device of your
+choice and log into the Expo Go app using your Expo EAS credentials. Provided you are on the same network and your
+computer is discoverable, you should be able to tap the session in the Expo Go app to open the ShopPing app.
+You can also scan the QR code shown in your terminal output.
+
+For more information on how to use Expo Go, please see [this Expo website](https://expo.dev/go).
+
+**WARNING**: While Expo Go nominally supports opening the app in a web browser, we have NOT implemented the polyfills
+required for web support as ShopPing is meant to be used on a mobile device. As such,
+we cannot guarantee any functionality if you attempt to open the app in a browser.
+
+For developers: Instructions for implementing the polyfills are located in a comment at the top of `app/_layout.tsx`,
+should web support be desired in the future.
+
+### Alternatives to Expo Go
+
+If Expo Go does not work for you, you may try using a platform emulator or simulator provided you have the relevant
+SDK available on your computer. Instructions for doing so are below:
+
 - [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
 - [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
-- **NOTE**: Web may work, but it is not officially supported and may be broken. If full web support is desired,
-  the commented steps in \_layout.tsx should be completed.
+
+As a last resort, you may fallback to
+[development builds](https://docs.expo.dev/develop/development-builds/introduction/).
+However, note that we have not tested this method, and as such, we cannot guarantee any
+functionality if you choose to use it.
